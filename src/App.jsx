@@ -1,27 +1,33 @@
-import Login from "./Login"; 
-import DashBoard from "./DashBoard";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
-import appStore from "./store";
+import appStore from "./utils/appStore";
+import Body from "./components/Body";
+import Login from "./components/Login";
+import Dashboard from "./components/Dashboard";
+
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <Body />,
+    children: [
+      { 
+        path: "/", 
+        element: <Login /> 
+      },
+      { 
+        path: "/dashboard", 
+        element: <Dashboard /> 
+      }
+    ]
+  }
+]);
 
 const App = () => {
-  const appRouter = createBrowserRouter([
-    {
-      path: "/",
-      element: <Login />
-    },
-    {
-      path: "/dashboard",
-      element: <DashBoard />
-    }
-  ]);
   return (
-  	<div>
-      <Provider store={appStore}>
-        <RouterProvider router={appRouter}/>
-      </Provider>
-    </div>
-  )
-}
+    <Provider store={appStore}>
+      <RouterProvider router={appRouter} />
+    </Provider>
+  );
+};
 
 export default App;
