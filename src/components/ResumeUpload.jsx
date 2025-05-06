@@ -1,63 +1,80 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 const ResumeUpload = () => {
   const [file, setFile] = useState(null);
-  const [resumeData, setResumeData] = useState(null);
-  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [resumeData, setResumeData] = useState(null);
+  
+  // Get API URL from environment variables
+  const apiUrl = import.meta.env.VITE_API_URL || '';
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-    setResumeData(null);
-    setError(null);
+    if (e.target.files[0]) {
+      setFile(e.target.files[0]);
+      setError(null);
+    }
   };
 
   const handleUpload = async () => {
     if (!file) {
-      setError("Please select a PDF file first.");
+      setError("Please select a file first");
       return;
     }
 
-    const formData = new FormData();
-    formData.append("resume", file);
+    if (file.type !== 'application/pdf') {
+      setError("Please upload a PDF file");
+      return;
+    }
 
     setLoading(true);
     setError(null);
 
     try {
-      const response = await fetch("http://localhost:5000/api/upload", {
-        method: "POST",
+      const formData = new FormData();
+      formData.append('resume', file);
+
+      const response = await fetch(`${apiUrl}/api/upload`, {
+        method: 'POST',
         body: formData,
       });
 
-      if (!response.ok) 
-        throw new Error("Failed to upload and process resume");
+      if (!response.ok) {
+        throw new Error('Failed to process resume');
+      }
 
-      const result = await response.json();
-      setResumeData(result.data);
-    } 
-    catch (err) {
-      console.error(err);
-      setError(err.message);
-    } 
-    finally {
+      const data = await response.json();
+      setResumeData(data);
+    } catch (err) {
+      setError(err.message || 'Something went wrong');
+    } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="max-w-xl mx-auto p-4">
-      <h2 className="text-2xl font-semibold mb-4">Upload Your Resume (PDF)</h2>
-      <input
-        type="file"
-        accept=".pdf"
-        onChange={handleFileChange}
-        className="mb-4 cursor-pointer"
-      />
+    <div className="max-w-xl mx-auto bg-white p-6 rounded-lg shadow-md">
+      <h2 className="text-2xl font-semibold mb-4">Upload Your Resume</h2>
+      <p className="mb-4 text-gray-600">Upload your PDF resume to extract information automatically</p>
+      
+      <div className="mb-4">
+        <input
+          type="file"
+          accept=".pdf"
+          onChange={handleFileChange}
+          className="block w-full text-sm text-gray-500
+            file:mr-4 file:py-2 file:px-4
+            file:rounded file:border-0
+            file:text-sm file:font-semibold
+            file:bg-blue-50 file:text-blue-700
+            hover:file:bg-blue-100"
+        />
+      </div>
+      
       <button
         onClick={handleUpload}
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer"
-        disabled={loading}
+        className="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer disabled:bg-blue-300"
+        disabled={loading || !file}
       >
         {loading ? "Processing..." : "Upload & Extract"}
       </button>
@@ -65,12 +82,12 @@ const ResumeUpload = () => {
       {error && <p className="text-red-500 mt-4">{error}</p>}
 
       {resumeData && (
-        <div className="mt-4 bg-gray-100 p-4 rounded">
-        <h2 className="text-xl font-semibold mb-2">Extracted Resume Data</h2>
-        <pre className="text-sm bg-white p-2 rounded overflow-x-auto">
-          {JSON.stringify(resumeData, null, 2)}
-        </pre>
-      </div>
+        <div className="mt-6 bg-gray-50 p-4 rounded border">
+          <h3 className="text-lg font-semibold mb-2">Extracted Resume Data</h3>
+          <pre className="text-sm bg-white p-2 rounded overflow-x-auto border">
+            {JSON.stringify(resumeData, null, 2)}
+          </pre>
+        </div>
       )}
     </div>
   );

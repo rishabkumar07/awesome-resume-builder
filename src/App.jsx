@@ -3,9 +3,8 @@ import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
 import Body from "./components/Body";
 import Login from "./components/Login";
-import DashboardLayout from "./components/DashboardLayout";
+import MainLayout from "./components/MainLayout";
 import ResumeUpload from "./components/ResumeUpload";
-import { Navigate } from "react-router-dom";
 
 const appRouter = createBrowserRouter([
   {
@@ -18,10 +17,9 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "/app",
-        element: <DashboardLayout />,
+        element: <MainLayout />,
         children: [
-          { index: true, element: <Navigate to="upload" replace /> },  // default to /app/upload
-          { path: "upload", element: <ResumeUpload /> },
+          { index: true, element: <ResumeUpload />}
         ]
       }
     ]
