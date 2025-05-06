@@ -22,12 +22,33 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+const handleError = (error, res) => {
+  // Single comprehensive log with relevant error details
+  console.error('Resume processing error:', {
+    message: error.message,
+    type: error.response ? 'API_ERROR' : error.request ? 'NETWORK_ERROR' : 'CODE_ERROR',
+    status: error.response?.status,
+    code: error.code
+  });
+  
+  const statusCode = error.response?.status || 500;
+  const errorMessage = error.response?.data?.error?.message || 'Failed to process resume';
+  
+  res.status(statusCode).json({
+    error: errorMessage,
+    code: error.code || 'UNKNOWN_ERROR'
+  });
+};
+
 // Route: Handle PDF upload and extract text
 app.post('/api/upload', upload.single('resume'), async (req, res) => {
     try {
-        const dataBuffer = req.file.buffer;
-        const pdfData = await pdfParse(dataBuffer);
-        const extractedText = pdfData.text;
+      if (!req.file)
+        return res.status(400).json({ error: 'No file uploaded', code: 'NO_FILE' });
+
+      const dataBuffer = req.file.buffer;
+      const pdfData = await pdfParse(dataBuffer);
+      const extractedText = pdfData.text;
 
         // Send extracted text to OpenAI for structuring
         const prompt = `
@@ -37,9 +58,12 @@ app.post('/api/upload', upload.single('resume'), async (req, res) => {
           "email": "",
           "phone": "",
           "education": [],
-          "work_experience": [],
+          "work_experience": [{"title":"","company":"","date_range":"","description":""}],
+          "projects": [{"title":"","technologies":"","description":""}],
           "skills": []
         }
+        Keep work_experience and projects as separate sections.
+
         Resume Text:
         ${extractedText}
         `;
@@ -49,23 +73,16 @@ app.post('/api/upload', upload.single('resume'), async (req, res) => {
             messages: [{ role: 'user', content: prompt }],
         });
 
-        const structuredData = completion.choices[0].message.content;
-        res.json({ data: JSON.parse(structuredData) });
-    } catch (error) {
-      console.error('Full error object:', error);
-
-      if (error.response) {
-        console.error('Error response data:', error.response.data);
-        console.error('Error response status:', error.response.status);
-        console.error('Error response headers:', error.response.headers);
-      } 
-      else if (error.request) {
-        console.error('Error request:', error.request);
-      } else {
-        console.error('Error message:', error.message);
-      }
-  
-      res.status(500).json({ error: 'Failed to process resume' });
+        try{
+          const structuredData = JSON.parse(completion.choices[0].message.content);
+          res.json({ data: structuredData })
+        } 
+        catch (parseError) {
+          throw new Error('Invalid response format from AI service');
+        }    
+    } 
+    catch (error) {
+      handleError(error, res);
     }
 });
 

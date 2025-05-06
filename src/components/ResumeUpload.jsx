@@ -67,13 +67,14 @@ const ResumeUpload = () => {
             file:rounded file:border-0
             file:text-sm file:font-semibold
             file:bg-blue-50 file:text-blue-700
+            file:cursor-pointer
             hover:file:bg-blue-100"
         />
       </div>
       
       <button
         onClick={handleUpload}
-        className="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer disabled:bg-blue-300"
+        className="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer disabled:bg-blue-300 disabled:cursor-not-allowed"
         disabled={loading || !file}
       >
         {loading ? "Processing..." : "Upload & Extract"}

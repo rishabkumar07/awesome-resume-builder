@@ -15,19 +15,33 @@ const Header = () => {
     navigate("/");
   };
 
+  // Get display name or fallback to email username
+  const getDisplayName = () => {
+    if (user.displayName) 
+      return user.displayName;
+    if (user.email)
+      return user.email.split('@')[0];
+    
+    return "User";
+  };
+
   return (
     <header className="bg-gray-800 text-white p-4">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="flex items-center">
+        <div className="flex-1">
           <h1 className="text-xl font-bold">Resume Builder</h1>
-          <span className="ml-4">Welcome, {user.displayName || user.email}</span>
         </div>
-        <button 
-          className="bg-red-500 text-white px-4 py-2 rounded cursor-pointer" 
-          onClick={handleLogout}
-        >
-          Logout
-        </button>
+        <div className="flex-1 text-center">
+          <span>Welcome, {getDisplayName()}</span>
+        </div>
+        <div className="flex-1 flex justify-end">
+          <button 
+            className="bg-red-500 text-white px-4 py-2 rounded cursor-pointer" 
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
+        </div>
       </div>
     </header>
   );
