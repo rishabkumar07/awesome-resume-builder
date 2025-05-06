@@ -16,7 +16,7 @@ const AuthComponent = () => {
         const { uid, email, displayName, photoURL, isAnonymous } = user;
         dispatch(addUser({ uid, email, displayName, photoURL, isAnonymous }));
         //auth passed redirect to browse page
-        navigate("/dashboard");
+        navigate("/app");
       }
       else {
         //user is signed out

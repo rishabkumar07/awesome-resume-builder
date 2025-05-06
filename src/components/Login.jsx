@@ -28,7 +28,7 @@ import { useNavigate } from "react-router-dom";
           const userCredential = await signInWithEmailAndPassword(auth, email.current.value, password.current.value);
           const { uid, email: userEmail, displayName, photoURL } = userCredential.user;
           dispatch(addUser({ uid, email: userEmail, displayName, photoURL }));
-          navigate("/dashboard");
+          navigate("/app");
         } 
         else {
         const userCredential = await createUserWithEmailAndPassword(auth, email.current.value, password.current.value);
@@ -39,7 +39,7 @@ import { useNavigate } from "react-router-dom";
         await auth.currentUser.reload();
         const { uid, email: userEmail, displayName, photoURL } = auth.currentUser;
         dispatch(addUser({ uid, email: userEmail, displayName, photoURL }));
-        navigate("/dashboard");
+        navigate("/app");
       }
     } catch (error) {
       setErrorMessage(error.message);
