@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
-import html2pdf from 'html2pdf.js';
+import html2canvas from 'html2canvas-pro';
+import { jsPDF } from 'jspdf';
 
 const ResumeTemplate = ({ initialData }) => {
   const [resume, setResume] = useState(() => ({
@@ -15,6 +16,7 @@ const ResumeTemplate = ({ initialData }) => {
   const [theme, setTheme] = useState('modern');
   const [isPdfGenerating, setIsPdfGenerating] = useState(false);
   const resumeRef = useRef();
+  const [tempDivId, setTempDivId] = useState(null);
 
   useEffect(() => {
     // Load from localStorage on mount (if exists)
@@ -85,26 +87,76 @@ const ResumeTemplate = ({ initialData }) => {
     setResume((prev) => ({ ...prev, [section]: updatedList }));
   };
 
-  const handleDownloadPDF = () => {
-    const element = resumeRef.current;
-    const options = {
-      margin: 0.5,
-      filename: `${resume.name.replace(/\s+/g, '_')}_resume.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
-    };
+  const handleDownloadPDF = async () => {
+    if (!resumeRef.current) {
+      console.error('Resume element not found');
+      return;
+    }
 
     setIsPdfGenerating(true);
 
-    html2pdf().from(element).set(options).save()
-      .then(() => {
-        console.log('PDF generated successfully');
-        setIsPdfGenerating(false);
-      }).catch(error => {
-        console.error('Error generating PDF:', error);
-        setIsPdfGenerating(false)
+    try {
+      // Create a unique ID for the temporary div
+      const uniqueId = `pdf-container-${Date.now()}`;
+      setTempDivId(uniqueId);
+
+      // Create a temporary hidden div with exact A4 dimensions
+      const tempDiv = document.createElement('div');
+      tempDiv.id = uniqueId;
+      tempDiv.style.position = 'absolute';
+      tempDiv.style.left = '-9999px';
+      tempDiv.style.width = '210mm'; // A4 width
+      tempDiv.style.height = '297mm'; // A4 height
+      tempDiv.style.visibility = 'hidden';
+      
+      // Clone the content
+      tempDiv.innerHTML = resumeRef.current.innerHTML;
+      document.body.appendChild(tempDiv);
+
+      // Wait a moment for styles to apply
+      await new Promise(resolve => setTimeout(resolve, 100));
+
+      // Generate canvas from the temporary div
+      const canvas = await html2canvas(document.getElementById(uniqueId), {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        allowTaint: true,
       });
+
+      // Create PDF with A4 dimensions
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4'
+      });
+
+      // Add the canvas as an image to the PDF
+      const imgData = canvas.toDataURL('image/png');
+      pdf.addImage(imgData, 'PNG', 0, 0, 210, 297);
+
+      // Save the PDF
+      pdf.save(`${resume.name.replace(/\s+/g, '_') || 'resume'}_resume.pdf`);
+
+      // Clean up
+      document.body.removeChild(tempDiv);
+      setTempDivId(null);
+      
+      console.log('PDF generated successfully');
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      
+      // Clean up in case of error
+      if (tempDivId) {
+        const tempElement = document.getElementById(tempDivId);
+        if (tempElement) {
+          document.body.removeChild(tempElement);
+        }
+        setTempDivId(null);
+      }
+    } finally {
+      setIsPdfGenerating(false);
+    }
   };
 
   const handleSaveToLocal = () => {
@@ -131,6 +183,18 @@ const ResumeTemplate = ({ initialData }) => {
     downloadAnchor.click();
     document.body.removeChild(downloadAnchor);
   };
+
+  // Clean up any temporary elements if component unmounts during PDF generation
+  useEffect(() => {
+    return () => {
+      if (tempDivId) {
+        const tempElement = document.getElementById(tempDivId);
+        if (tempElement) {
+          document.body.removeChild(tempElement);
+        }
+      }
+    };
+  }, [tempDivId]);
 
   return (
     <div className="mt-6 bg-gray-50 p-8 rounded-lg border shadow-sm max-w-7xl mx-auto">
