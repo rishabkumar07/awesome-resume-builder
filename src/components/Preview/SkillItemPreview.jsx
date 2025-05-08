@@ -1,8 +1,6 @@
-import React from 'react';
-
-const SkillItemPreview = ({ skill }) => {
+const SkillItemPreview = ({ skill, themeStyles }) => {
   return (
-    <span className="bg-gray-200 text-gray-800 px-3 py-1 rounded mr-2 mb-2">
+    <span style={themeStyles.skillItem}>
       {skill}
     </span>
   );

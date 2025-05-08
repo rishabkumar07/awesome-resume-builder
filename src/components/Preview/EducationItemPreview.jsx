@@ -1,14 +1,12 @@
-import React from 'react';
-
-const EducationItemPreview = ({ item }) => {
+const EducationItemPreview = ({ item, themeStyles }) => {
   return (
-    <div className="mb-1">
-      <div className="flex justify-between">
-        <span className="font-medium">{item.degree}</span>
-        <span className="text-gray-600">{item.institution}</span>
+    <div style={themeStyles.listItem}>
+      <div style={themeStyles.listItemHeader}>
+        <span style={themeStyles.listItemTitle}>{item.degree}</span>
+        <span style={themeStyles.listItemDetails}>{item.institution}</span>
       </div>
-      <div className="text-gray-600">{item.date_range}</div>
-      {item.gpa && <div className="text-gray-600">GPA: {item.gpa}</div>}
+      <div style={themeStyles.listItemDetails}>{item.date_range}</div>
+      {item.gpa && <div style={themeStyles.listItemDetails}>GPA: {item.gpa}</div>}
     </div>
   );
 };

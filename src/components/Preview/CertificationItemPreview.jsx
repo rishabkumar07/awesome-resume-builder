@@ -1,13 +1,11 @@
-import React from 'react';
-
-const CertificationItemPreview = ({ item }) => {
+const CertificationItemPreview = ({ item, themeStyles }) => {
   return (
-    <div className="mb-1">
-      <div className="flex justify-between">
-        <span className="font-medium">{item.name}</span>
-        <span className="text-gray-600">{item.issuer}</span>
+    <div style={themeStyles.listItem}>
+      <div style={themeStyles.listItemHeader}>
+        <span style={themeStyles.listItemTitle}>{item.name}</span>
+        <span style={themeStyles.listItemDetails}>{item.issuer}</span>
       </div>
-      <div className="text-gray-600">{item.date}</div>
+      <div style={themeStyles.listItemDetails}>{item.date}</div>
     </div>
   );
 };

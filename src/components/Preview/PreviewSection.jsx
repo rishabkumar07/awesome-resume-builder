@@ -3,32 +3,30 @@ import React from 'react';
 const PreviewSection = ({
   title,
   items,
-  theme,
-  renderItemPreview, // Function to render the preview for a single item
+  themeStyles,
+  renderItemPreview,
 }) => {
   if (!items || items.length === 0) {
     return null;
   }
 
-  const headingClass = `font-semibold mb-2 ${
-    theme === 'modern'
-      ? 'text-lg text-blue-600'
-      : theme === 'classic'
-      ? 'border-b pb-1 text-lg'
-      : theme === 'professional'
-      ? 'text-blue-700 border-b border-gray-300 pb-1'
-      : 'text-lg'
-  }`;
+  const headingStyle = themeStyles.heading;
 
   return (
-    <section className="mb-4">
-      <h3 className={headingClass}>
+    <section style={themeStyles.section}>
+      <h3 style={headingStyle}>
         {title}
       </h3>
-      <div className={`space-y-${title === 'Skills' ? '2 flex flex-wrap gap-2' : '4'}`}>
+      <div style={{
+          flexDirection: themeStyles.skillsContainer.flexDirection,
+          flexWrap: themeStyles.skillsContainer.flexWrap,
+          gap: themeStyles.skillsContainer.gap,
+          marginTop: themeStyles.skillsContainer.marginTop,
+          ...(title !== 'Skills' && { display: 'flex', flexDirection: 'column', gap: '1rem' }) // Simulate space-y-4 with gap
+      }}>
         {items.map((item, idx) => (
           <React.Fragment key={idx}>
-            {renderItemPreview(item, idx)}
+            {renderItemPreview(item, idx, themeStyles)}
           </React.Fragment>
         ))}
       </div>

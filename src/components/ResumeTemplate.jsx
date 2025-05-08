@@ -1,4 +1,3 @@
-import React from 'react';
 import useResumeEditor from '../utils/hooks/useResumeEditor';
 import PersonalInfoForm from './FormSection/PersonalInfoForm';
 import EditableListSection from './EditableListSection';
@@ -16,6 +15,8 @@ import SkillItemPreview from './Preview/SkillItemPreview';
 import CertificationItemPreview from './Preview/CertificationItemPreview';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import ResumeDocument from './ResumeDocument';
+import { getThemeStyles } from '../assets/styles/resumeThemes';
+
 
 const ResumeTemplate = ({ initialData }) => {
   const {
@@ -31,6 +32,8 @@ const ResumeTemplate = ({ initialData }) => {
     handleLoadFromLocal,
     handleExportJSON,
   } = useResumeEditor(initialData);
+
+  const currentThemeStyles = getThemeStyles(theme);
 
   return (
     <div className="mt-6 bg-gray-50 p-8 rounded-lg border shadow-sm max-w-7xl mx-auto">
@@ -138,60 +141,58 @@ const ResumeTemplate = ({ initialData }) => {
           />
         </div>
 
-        {/* Preview for PDF*/}
+        {/* Preview for PDF */}
         <div className="flex flex-col">
           <div
-            // Remove ref={targetRef}
-            className={`p-8 rounded border mb-4 h-[800px] overflow-auto ${
-              theme === 'modern'
-                ? 'bg-white text-gray-800 font-sans'
-                : theme === 'classic'
-                ? 'bg-yellow-50 text-gray-900 font-serif'
-                : theme === 'professional'
-                ? 'bg-blue-50 text-gray-800 font-sans'
-                : 'bg-gray-100 text-gray-700 font-light'
-            }`}
+            style={{
+                backgroundColor: currentThemeStyles.page.backgroundColor,
+                color: currentThemeStyles.page.color,
+                fontFamily: currentThemeStyles.page.fontFamily,
+                fontSize: currentThemeStyles.page.fontSize,
+                lineHeight: currentThemeStyles.page.lineHeight,
+            }}
+            className={`p-8 rounded border mb-4 h-[800px] overflow-auto`}
           >
             <PersonalInfoPreview
               name={resume.name}
               email={resume.email}
               phone={resume.phone}
-              theme={theme}
+              themeStyles={currentThemeStyles}
             />
 
             <PreviewSection
               title="Education"
               items={resume.education}
-              theme={theme}
-              renderItemPreview={(item) => <EducationItemPreview item={item} />}
+              themeStyles={currentThemeStyles}
+              renderItemPreview={(item) => <EducationItemPreview item={item} themeStyles={currentThemeStyles} />} // Pass theme styles
             />
 
             <PreviewSection
               title="Work Experience"
               items={resume.work_experience}
-              theme={theme}
-              renderItemPreview={(item) => <WorkExperienceItemPreview item={item} />}
+              themeStyles={currentThemeStyles}
+              renderItemPreview={(item) => <WorkExperienceItemPreview item={item} themeStyles={currentThemeStyles} />} // Pass theme styles
             />
 
             <PreviewSection
               title="Projects"
               items={resume.projects}
-              theme={theme}
-              renderItemPreview={(item) => <ProjectItemPreview item={item} />}
+              themeStyles={currentThemeStyles}
+              renderItemPreview={(item) => <ProjectItemPreview item={item} themeStyles={currentThemeStyles} />} // Pass theme styles
             />
 
             <PreviewSection
               title="Skills"
               items={resume.skills}
-              theme={theme}
-              renderItemPreview={(skill) => <SkillItemPreview skill={skill} />}
+              themeStyles={currentThemeStyles}
+              renderItemPreview={(skill) => <SkillItemPreview skill={skill} themeStyles={currentThemeStyles} />} // Pass theme styles
             />
 
             <PreviewSection
               title="Certifications"
               items={resume.certifications}
-              theme={theme}
-              renderItemPreview={(item) => <CertificationItemPreview item={item} />}
+              themeStyles={currentThemeStyles}
+              renderItemPreview={(item) => <CertificationItemPreview item={item} themeStyles={currentThemeStyles} />} // Pass theme styles
             />
           </div>
 
@@ -211,7 +212,7 @@ const ResumeTemplate = ({ initialData }) => {
             </button>
 
             <PDFDownloadLink
-              document={<ResumeDocument resume={resume} />}
+              document={<ResumeDocument resume={resume} themeStyles={currentThemeStyles} />} // Pass theme styles to ResumeDocument
               fileName={`${resume.name.replace(/\s+/g, '_') || 'resume'}_resume.pdf`}
             >
               {({ blob, url, loading, error }) =>
