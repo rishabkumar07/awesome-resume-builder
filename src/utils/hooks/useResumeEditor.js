@@ -13,27 +13,8 @@ const useResumeEditor = (initialData) => {
   }));
   const [theme, setTheme] = useState('modern');
 
-  useEffect(() => {
-    // Load from localStorage on mount (if exists)
-    const savedResume = localStorage.getItem('resumeData');
-    if (savedResume) {
-      try {
-        const parsed = JSON.parse(savedResume);
-        setResume({
-          name: parsed.name || '',
-          email: parsed.email || '',
-          phone: parsed.phone || '',
-          education: parsed.education || [],
-          work_experience: parsed.work_experience || [],
-          projects: parsed.projects || [],
-          skills: parsed.skills || [],
-          certifications: parsed.certifications || [],
-        });
-      } catch (e) {
-        console.error('Error parsing saved resume:', e);
-      }
-    }
-  }, []);
+  // Remove the automatic loading from localStorage on mount
+  // We'll only load when the user explicitly requests it
 
   const handleFieldChange = (field, value) => {
     setResume((prev) => ({ ...prev, [field]: value }));
@@ -90,10 +71,28 @@ const useResumeEditor = (initialData) => {
   const handleLoadFromLocal = () => {
     const savedResume = localStorage.getItem('resumeData');
     if (savedResume) {
-      setResume(JSON.parse(savedResume));
-      alert('Resume loaded from local storage!');
+      try {
+        const parsed = JSON.parse(savedResume);
+        setResume({
+          name: parsed.name || '',
+          email: parsed.email || '',
+          phone: parsed.phone || '',
+          education: parsed.education || [],
+          work_experience: parsed.work_experience || [],
+          projects: parsed.projects || [],
+          skills: parsed.skills || [],
+          certifications: parsed.certifications || [],
+        });
+        alert('Resume loaded from local storage!');
+        return true;
+      } catch (e) {
+        console.error('Error parsing saved resume:', e);
+        alert('Error loading resume from local storage.');
+        return false;
+      }
     } else {
       alert('No saved resume found in local storage.');
+      return false;
     }
   };
 
