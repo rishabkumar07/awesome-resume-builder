@@ -6,6 +6,7 @@ const ResumeUpload = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [resumeData, setResumeData] = useState(null);
+  const apiUrl = import.meta.env.VITE_API_URL || '';
   
   const handleFileChange = (e) => {
     if (e.target.files[0]) {
@@ -32,8 +33,7 @@ const ResumeUpload = () => {
       const formData = new FormData();
       formData.append('resume', file);
       
-      const url = '/api/upload';
-      const response = await fetch(url, {
+      const response = await fetch(`${apiUrl}/api/upload`, {
         method: 'POST',
         body: formData,
       });

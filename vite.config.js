@@ -8,14 +8,4 @@ export default defineConfig({
     tailwindcss(),
     react()
   ],
-  server: {
-    proxy: {
-      '/api': {
-        target: 'https://awesome-resume-builder-rishab-guptas-projects.vercel.app',
-        changeOrigin: true,
-        secure: false
-      }
-    }
-  }
 })
-
