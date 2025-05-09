@@ -6,6 +6,7 @@ const createStyles = (themeStyles) => StyleSheet.create({
   heading: themeStyles.heading,
   subHeading: themeStyles.subHeading,
   text: themeStyles.text,
+  mt: themeStyles.mt,
   listItem: themeStyles.listItem,
   listItemHeader: themeStyles.listItemHeader,
   listItemTitle: themeStyles.listItemTitle,
@@ -56,7 +57,7 @@ const ResumeDocument = ({ resume, themeStyles }) => {
                   <Text style={styles.listItemDetails}>{item.company}</Text>
                 </View>
                 <Text style={styles.listItemDetails}>{item.date_range}</Text>
-                <Text style={styles.text}>{item.description}</Text>
+                <Text style={{ ...styles.text, ...styles.mt }}>{item.description}</Text>
               </View>
             ))}
           </View>

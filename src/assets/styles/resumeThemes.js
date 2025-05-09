@@ -1,13 +1,10 @@
-// src/styles/resumeThemes.js
-
-// Define base styles that can be extended or overridden by themes
 const baseStyles = {
   page: {
     flexDirection: 'column',
     padding: 30,
-    fontFamily: 'Helvetica', // Use a standard font supported by react-pdf and browsers
+    fontFamily: 'Helvetica', 
     fontSize: 12,
-    lineHeight: 1.4, // Add line height for readability
+    lineHeight: 1.4,
   },
   section: {
     marginBottom: 15,
@@ -31,35 +28,41 @@ const baseStyles = {
     marginBottom: 8,
   },
   listItemHeader: {
+    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 2,
   },
   listItemTitle: {
     fontSize: 12,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   listItemDetails: {
     fontSize: 11,
-    color: '#555', // Use hex or RGB
+    color: '#555',
+    fontFamily: 'Times-Roman',
+    marginTop: 2
   },
   skillsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     marginTop: 5,
+    display: 'flex'
   },
   skillItem: {
-    backgroundColor: '#eee', // Use hex or RGB
+    backgroundColor: '#eee',
     padding: 5,
     marginRight: 5,
     marginBottom: 5,
     borderRadius: 3,
     fontSize: 10,
   },
-  // Add any other common styles here
+  mt: {
+    marginTop: 2,
+  }
 };
 
-// Define theme-specific overrides or additions
+//theme-specific styles
 const themes = {
   modern: {
     page: {
@@ -131,6 +134,7 @@ export const getThemeStyles = (themeName) => {
     heading: { ...baseStyles.heading, ...theme.heading },
     subHeading: { ...baseStyles.subHeading, ...theme.subHeading },
     text: { ...baseStyles.text, ...theme.text },
+    mt: { ...baseStyles.mt, ...theme.mt },
     listItem: { ...baseStyles.listItem, ...theme.listItem },
     listItemHeader: { ...baseStyles.listItemHeader, ...theme.listItemHeader },
     listItemTitle: { ...baseStyles.listItemTitle, ...theme.listItemTitle },

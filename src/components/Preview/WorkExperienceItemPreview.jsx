@@ -6,7 +6,7 @@ const WorkExperienceItemPreview = ({ item, themeStyles }) => {
         <span style={themeStyles.listItemDetails}>{item.company}</span>
       </div>
       <div style={themeStyles.listItemDetails}>{item.date_range}</div>
-      <div style={themeStyles.text}>{item.description}</div>
+      <div style={{...themeStyles.text, ...themeStyles.mt}}>{item.description}</div>
     </div>
   );
 };

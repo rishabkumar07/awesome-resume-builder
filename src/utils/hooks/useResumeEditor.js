@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const useResumeEditor = (initialData) => {
   const [resume, setResume] = useState(() => ({
@@ -12,9 +12,6 @@ const useResumeEditor = (initialData) => {
     certifications: initialData?.certifications || [],
   }));
   const [theme, setTheme] = useState('modern');
-
-  // Remove the automatic loading from localStorage on mount
-  // We'll only load when the user explicitly requests it
 
   const handleFieldChange = (field, value) => {
     setResume((prev) => ({ ...prev, [field]: value }));

@@ -22,7 +22,8 @@ const PreviewSection = ({
           flexWrap: themeStyles.skillsContainer.flexWrap,
           gap: themeStyles.skillsContainer.gap,
           marginTop: themeStyles.skillsContainer.marginTop,
-          ...(title !== 'Skills' && { display: 'flex', flexDirection: 'column', gap: '1rem' }) // Simulate space-y-4 with gap
+          display: themeStyles.skillsContainer.display,
+          ...(title !== 'Skills' && { display: 'flex', flexDirection: 'column', gap: '1rem' })
       }}>
         {items.map((item, idx) => (
           <React.Fragment key={idx}>
