@@ -5,11 +5,13 @@ import Body from "./components/Body";
 import Login from "./components/Login";
 import MainLayout from "./components/MainLayout";
 import ResumeUpload from "./components/ResumeUpload";
+import ErrorPage from "./components/ErrorPage";
 
 const appRouter = createBrowserRouter([
   {
     path: "/",
     element: <Body />,
+    errorElement: <ErrorPage />,
     children: [
       { 
         path: "/", 
