@@ -73,6 +73,7 @@ const ResumeUpload = () => {
           projects: parsed.projects || [],
           skills: parsed.skills || [],
           certifications: parsed.certifications || [],
+          custom_sections: parsed.custom_sections || [], // Add this line
         });
         return true;
       } catch (e) {

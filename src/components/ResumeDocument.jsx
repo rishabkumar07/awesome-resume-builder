@@ -110,6 +110,23 @@ const ResumeDocument = ({ resume, themeStyles }) => {
             </View>
           )}
 
+          {/* Custom Sections */}
+          {resume.custom_sections && resume.custom_sections.length > 0 && 
+            resume.custom_sections.map((section, sectionIndex) => (
+              <View key={sectionIndex} style={styles.section}>
+                <Text style={styles.heading}>{section.title}</Text>
+                {section.items.map((item, itemIndex) => (
+                  <View key={itemIndex} style={styles.listItem}>
+                    <View style={styles.listItemHeader}>
+                      <Text style={styles.listItemTitle}>{item.title}</Text>
+                    </View>
+                    <Text style={styles.text}>{item.description}</Text>
+                  </View>
+                ))}
+              </View>
+            ))
+          }
+
         </View>
       </Page>
     </Document>

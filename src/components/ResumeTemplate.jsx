@@ -16,11 +16,12 @@ import CertificationItemPreview from './Preview/CertificationItemPreview';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import ResumeDocument from './ResumeDocument';
 import { getThemeStyles } from '../assets/styles/resumeThemes';
-
+import CustomSectionManager from './CustomSectionManager';
 
 const ResumeTemplate = ({ initialData }) => {
   const {
     resume,
+    setResume,
     theme,
     setTheme,
     handleFieldChange,
@@ -31,6 +32,9 @@ const ResumeTemplate = ({ initialData }) => {
     handleSaveToLocal,
     handleLoadFromLocal,
     handleExportJSON,
+    handleAddCustomSection,
+    handleRemoveCustomSection,
+    handleAddCustomSectionItem,
   } = useResumeEditor(initialData);
 
   const currentThemeStyles = getThemeStyles(theme);
@@ -146,6 +150,60 @@ const ResumeTemplate = ({ initialData }) => {
               />
             )}
           />
+
+          <CustomSectionManager onAddSection={handleAddCustomSection} />
+
+          {resume.custom_sections.map((section, sectionIndex) => (
+            <div key={sectionIndex} className="mb-4">
+              <div className="flex justify-between items-center mb-2">
+                <button
+                  onClick={() => handleRemoveCustomSection(sectionIndex)}
+                  className="bg-red-500 text-white px-2 py-1 rounded text-xs hover:bg-red-600 transition-colors duration-200 cursor-pointer"
+                >
+                  Remove Section
+                </button>
+              </div>
+              
+              <EditableListSection
+                title={section.title}
+                items={section.items}
+                onAddItem={() => handleAddCustomSectionItem(sectionIndex)}
+                onRemoveItem={(_, itemIndex) => {
+                  const updatedSections = [...resume.custom_sections];
+                  updatedSections[sectionIndex].items = 
+                    updatedSections[sectionIndex].items.filter((_, i) => i !== itemIndex);
+                  setResume(prev => ({ ...prev, custom_sections: updatedSections }));
+                }}
+                sectionKey={`custom_${sectionIndex}`}
+                renderItemForm={(item, itemIndex) => (
+                  <div>
+                    <input
+                      type="text"
+                      value={item.title || ''}
+                      onChange={(e) => {
+                        const updatedSections = [...resume.custom_sections];
+                        updatedSections[sectionIndex].items[itemIndex].title = e.target.value;
+                        setResume(prev => ({ ...prev, custom_sections: updatedSections }));
+                      }}
+                      placeholder="Title"
+                      className="w-full p-2 border rounded mb-2"
+                    />
+                    <textarea
+                      value={item.description || ''}
+                      onChange={(e) => {
+                        const updatedSections = [...resume.custom_sections];
+                        updatedSections[sectionIndex].items[itemIndex].description = e.target.value;
+                        setResume(prev => ({ ...prev, custom_sections: updatedSections }));
+                      }}
+                      placeholder="Description"
+                      className="w-full p-2 border rounded mb-2"
+                      rows="3"
+                    />
+                  </div>
+                )}
+              />
+            </div>
+          ))}
         </div>
 
         {/* Preview for PDF */}
@@ -201,6 +259,24 @@ const ResumeTemplate = ({ initialData }) => {
               themeStyles={currentThemeStyles}
               renderItemPreview={(item, index, themeStyles) => <CertificationItemPreview item={item} themeStyles={themeStyles} />}
             />
+
+            {/* Add custom sections to preview */}
+            {resume.custom_sections.map((section, index) => (
+              <PreviewSection
+                key={index}
+                title={section.title}
+                items={section.items}
+                themeStyles={currentThemeStyles}
+                renderItemPreview={(item, idx, themeStyles) => (
+                  <div style={themeStyles.listItem}>
+                    <div style={themeStyles.listItemHeader}>
+                      <span style={themeStyles.listItemTitle}>{item.title}</span>
+                    </div>
+                    <p style={themeStyles.text}>{item.description}</p>
+                  </div>
+                )}
+              />
+            ))}
           </div>
 
           {/* Action buttons */}

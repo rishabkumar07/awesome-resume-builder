@@ -10,6 +10,7 @@ const useResumeEditor = (initialData) => {
     projects: initialData?.projects || [],
     skills: initialData?.skills || [],
     certifications: initialData?.certifications || [],
+    custom_sections: initialData?.custom_sections || [], // Add custom sections array
   }));
   const [theme, setTheme] = useState('modern');
 
@@ -79,6 +80,7 @@ const useResumeEditor = (initialData) => {
           projects: parsed.projects || [],
           skills: parsed.skills || [],
           certifications: parsed.certifications || [],
+          custom_sections: parsed.custom_sections || [], // Add this line to load custom sections
         });
         alert('Resume loaded from local storage!');
         return true;
@@ -103,6 +105,24 @@ const useResumeEditor = (initialData) => {
     document.body.removeChild(downloadAnchor);
   };
 
+  const handleAddCustomSection = (sectionTitle) => {
+    setResume((prev) => ({
+      ...prev,
+      custom_sections: [...prev.custom_sections, { title: sectionTitle, items: [] }]
+    }));
+  };
+  
+  const handleRemoveCustomSection = (index) => {
+    const updatedSections = resume.custom_sections.filter((_, i) => i !== index);
+    setResume((prev) => ({ ...prev, custom_sections: updatedSections }));
+  };
+  
+  const handleAddCustomSectionItem = (sectionIndex) => {
+    const updatedSections = [...resume.custom_sections];
+    updatedSections[sectionIndex].items.push({ title: '', description: '' });
+    setResume((prev) => ({ ...prev, custom_sections: updatedSections }));
+  };
+
   return {
     resume,
     setResume,
@@ -116,6 +136,9 @@ const useResumeEditor = (initialData) => {
     handleSaveToLocal,
     handleLoadFromLocal,
     handleExportJSON,
+    handleAddCustomSection,
+    handleRemoveCustomSection,
+    handleAddCustomSectionItem,
   };
 };
 
