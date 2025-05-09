@@ -1,7 +1,6 @@
 const baseStyles = {
   page: {
     flexDirection: 'column',
-    padding: 30,
     fontFamily: 'Helvetica', 
     fontSize: 12,
     lineHeight: 1.4,

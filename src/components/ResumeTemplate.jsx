@@ -164,35 +164,35 @@ const ResumeTemplate = ({ initialData }) => {
               title="Education"
               items={resume.education}
               themeStyles={currentThemeStyles}
-              renderItemPreview={(item) => <EducationItemPreview item={item} themeStyles={currentThemeStyles} />} // Pass theme styles
+              renderItemPreview={(item, index, themeStyles) => <EducationItemPreview item={item} themeStyles={themeStyles} />}
             />
 
             <PreviewSection
               title="Work Experience"
               items={resume.work_experience}
               themeStyles={currentThemeStyles}
-              renderItemPreview={(item) => <WorkExperienceItemPreview item={item} themeStyles={currentThemeStyles} />} // Pass theme styles
+              renderItemPreview={(item, index, themeStyles) => <WorkExperienceItemPreview item={item} themeStyles={themeStyles} />}
             />
 
             <PreviewSection
               title="Projects"
               items={resume.projects}
               themeStyles={currentThemeStyles}
-              renderItemPreview={(item) => <ProjectItemPreview item={item} themeStyles={currentThemeStyles} />} // Pass theme styles
+              renderItemPreview={(item, index, themeStyles) => <ProjectItemPreview item={item} themeStyles={themeStyles} />}
             />
 
             <PreviewSection
               title="Skills"
               items={resume.skills}
               themeStyles={currentThemeStyles}
-              renderItemPreview={(skill) => <SkillItemPreview skill={skill} themeStyles={currentThemeStyles} />} // Pass theme styles
+              renderItemPreview={(skill, index, themeStyles) => <SkillItemPreview skill={skill} themeStyles={themeStyles} />}
             />
 
             <PreviewSection
               title="Certifications"
               items={resume.certifications}
               themeStyles={currentThemeStyles}
-              renderItemPreview={(item) => <CertificationItemPreview item={item} themeStyles={currentThemeStyles} />} // Pass theme styles
+              renderItemPreview={(item, index, themeStyles) => <CertificationItemPreview item={item} themeStyles={themeStyles} />}
             />
           </div>
 
