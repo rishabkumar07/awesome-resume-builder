@@ -7,9 +7,6 @@ const ResumeUpload = () => {
   const [error, setError] = useState(null);
   const [resumeData, setResumeData] = useState(null);
   
-  // Get API URL from environment variables
-  const apiUrl = import.meta.env.VITE_API_URL || '';
-
   const handleFileChange = (e) => {
     if (e.target.files[0]) {
       setFile(e.target.files[0]);
@@ -34,10 +31,8 @@ const ResumeUpload = () => {
     try {
       const formData = new FormData();
       formData.append('resume', file);
-      const url = apiUrl.endsWith('/') 
-      ? `${apiUrl}api/upload` 
-      : `${apiUrl}/api/upload`;
-
+      
+      const url = '/api/upload';
       const response = await fetch(url, {
         method: 'POST',
         body: formData,
