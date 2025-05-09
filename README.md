@@ -21,7 +21,7 @@ A modern resume builder application that uses AI to help you create professional
 ##Glimpses from the app
 
 ![Screenshot (379)](https://github.com/user-attachments/assets/03984307-e1a6-4a4c-a2c0-38cfe8ba01ef)
-![Screenshot (375)](https://github.com/user-attachments/assets/b5fca0ff-6849-479f-a0c9-1fbd9f28e72b)
+![Screenshot (383)](https://github.com/user-attachments/assets/666f9524-4704-492c-bbbb-cb85cb1fc998)
 ![Screenshot (376)](https://github.com/user-attachments/assets/1bab74eb-7ef8-4b40-976b-8b1899d05357)
 ![Screenshot (377)](https://github.com/user-attachments/assets/c7ead9dc-2036-4375-91d5-bd534ac908de)
 ![Screenshot (381)](https://github.com/user-attachments/assets/b0d365aa-e476-4dc8-92c4-043d49256d81)
