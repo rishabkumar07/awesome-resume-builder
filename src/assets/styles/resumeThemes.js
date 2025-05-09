@@ -70,34 +70,32 @@ const themes = {
     },
     heading: {
       ...baseStyles.heading,
-      color: '#2563eb', // Example blue color (hex)
+      color: '#2563eb',
       borderBottom: '1px solid #2563eb',
     },
-    // Override other styles for modern theme
   },
   classic: {
     page: {
-      backgroundColor: '#fff8e1', // Light yellow background
-      color: '#424242', // Darker text
-      fontFamily: 'Times-Roman', // Classic font
+      backgroundColor: '#fff8e1',
+      color: '#424242',
+      fontFamily: 'Times-Roman',
     },
     heading: {
       ...baseStyles.heading,
       borderBottom: '1px solid #424242',
     },
-    // Override other styles for classic theme
   },
   professional: {
     page: {
-      backgroundColor: '#e3f2fd', // Light blue background
-      color: '#263238', // Darker text
+      backgroundColor: '#e3f2fd',
+      color: '#263238',
     },
     heading: {
       ...baseStyles.heading,
-      color: '#0d47a1', // Dark blue heading
-      borderBottom: '2px solid #0d47a1', // Thicker border
+      color: '#0d47a1',
+      borderBottom: '2px solid #0d47a1',
     },
-    personalInfoHeading: { // Specific style for personal info in professional theme
+    personalInfoHeading: {
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 5,
@@ -105,22 +103,20 @@ const themes = {
         borderBottom: '4px solid #0d47a1',
         paddingBottom: 10,
     },
-    // Override other styles for professional theme
   },
   minimal: {
     page: {
-      backgroundColor: '#f5f5f5', // Light gray background
+      backgroundColor: '#f5f5f5',
       color: '#424242',
     },
     heading: {
       ...baseStyles.heading,
-      borderBottom: 'none', // No border
+      borderBottom: 'none',
       marginBottom: 10,
     },
     section: {
-        marginBottom: 20, // More space between sections
+        marginBottom: 20,
     }
-    // Override other styles for minimal theme
   },
 };
 

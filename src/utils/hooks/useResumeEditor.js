@@ -10,7 +10,7 @@ const useResumeEditor = (initialData) => {
     projects: initialData?.projects || [],
     skills: initialData?.skills || [],
     certifications: initialData?.certifications || [],
-    custom_sections: initialData?.custom_sections || [], // Add custom sections array
+    custom_sections: initialData?.custom_sections || [],
   }));
   const [theme, setTheme] = useState('modern');
 
@@ -80,7 +80,7 @@ const useResumeEditor = (initialData) => {
           projects: parsed.projects || [],
           skills: parsed.skills || [],
           certifications: parsed.certifications || [],
-          custom_sections: parsed.custom_sections || [], // Add this line to load custom sections
+          custom_sections: parsed.custom_sections || [],
         });
         alert('Resume loaded from local storage!');
         return true;

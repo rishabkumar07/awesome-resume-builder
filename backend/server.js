@@ -23,7 +23,6 @@ const openai = new OpenAI({
 });
 
 const handleError = (error, res) => {
-  // Single comprehensive log with relevant error details
   console.error('Resume processing error:', {
     message: error.message,
     type: error.response ? 'API_ERROR' : error.request ? 'NETWORK_ERROR' : 'CODE_ERROR',

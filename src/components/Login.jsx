@@ -57,11 +57,11 @@ const Login = () => {
         // Get the updated user data
         const { uid, email: userEmail, photoURL } = userCredential.user;
         
-        // Dispatch with the display name from our ref
+        // Dispatch with the display name from ref
         dispatch(addUser({ 
           uid, 
           email: userEmail, 
-          displayName: displayName.current.value, // Use the value directly
+          displayName: displayName.current.value,
           photoURL 
         }));
         

@@ -295,7 +295,7 @@ const ResumeTemplate = ({ initialData }) => {
             </button>
 
             <PDFDownloadLink
-              document={<ResumeDocument resume={resume} themeStyles={currentThemeStyles} />} // Pass theme styles to ResumeDocument
+              document={<ResumeDocument resume={resume} themeStyles={currentThemeStyles} />}
               fileName={`${resume.name.replace(/\s+/g, '_') || 'resume'}_resume.pdf`}
             >
               {({ blob, url, loading, error }) =>
