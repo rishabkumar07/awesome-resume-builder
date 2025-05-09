@@ -17,6 +17,15 @@ A modern resume builder application that uses AI to help you create professional
 - Authentication: Firebase
 - PDF Processing: pdf-parse, @react-pdf/renderer
 
+
+##Glimpses from the app
+![Screenshot (374)](https://github.com/user-attachments/assets/20b371a4-1383-435f-a2a1-a247286af794)
+![Screenshot (375)](https://github.com/user-attachments/assets/b5fca0ff-6849-479f-a0c9-1fbd9f28e72b)
+![Screenshot (376)](https://github.com/user-attachments/assets/1bab74eb-7ef8-4b40-976b-8b1899d05357)
+![Screenshot (377)](https://github.com/user-attachments/assets/c7ead9dc-2036-4375-91d5-bd534ac908de)
+![Screenshot (378)](https://github.com/user-attachments/assets/4dca8ab3-de42-4ab2-8a79-032caad60409)
+
+
 ## Getting Started
 
 ### Prerequisites
