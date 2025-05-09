@@ -34,8 +34,11 @@ const ResumeUpload = () => {
     try {
       const formData = new FormData();
       formData.append('resume', file);
+      const url = apiUrl.endsWith('/') 
+      ? `${apiUrl}api/upload` 
+      : `${apiUrl}/api/upload`;
 
-      const response = await fetch(`${apiUrl}/api/upload`, {
+      const response = await fetch(url, {
         method: 'POST',
         body: formData,
       });
