@@ -15,7 +15,11 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const toggleSignInForm = () => setIsSignInForm(!isSignInForm);
+  const toggleSignInForm = () => {
+    setIsSignInForm(!isSignInForm);
+    setErrorMessage(null); // Reset error message when switching forms
+  };
+  
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
   const handleSubmit = async (e) => {
@@ -68,15 +72,15 @@ const Login = () => {
     }
   };
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <form className="bg-white p-6 rounded shadow-md w-80" onSubmit={handleSubmit}>
-        <h2 className="text-xl font-bold mb-4">{isSignInForm ? "Sign In" : "Sign Up"}</h2>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-purple-600 to-blue-500">
+      <form className="bg-white/10 backdrop-blur-lg p-8 rounded-lg shadow-2xl w-96" onSubmit={handleSubmit}>
+        <h2 className="text-3xl font-bold mb-6 text-white">{isSignInForm ? "Sign In" : "Sign Up"}</h2>
         {!isSignInForm && (
           <input
             ref={displayName}
             type="text"
             placeholder="Full Name"
-            className="w-full mb-2 p-2 border rounded"
+            className="w-full mb-4 p-3 border border-white/20 rounded-lg bg-white/5 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50"
             required
           />
         )}
@@ -84,20 +88,20 @@ const Login = () => {
           ref={email}
           type="email"
           placeholder="Email"
-          className="w-full mb-2 p-2 border rounded"
+          className="w-full mb-4 p-3 border border-white/20 rounded-lg bg-white/5 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50"
           required
         />
-        <div className="relative mb-4">
+        <div className="relative mb-6">
           <input
             ref={password}
             type={showPassword ? "text" : "password"}
             placeholder="Password"
-            className="w-full p-2 border rounded pr-10"
+            className="w-full p-3 border border-white/20 rounded-lg bg-white/5 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 pr-10"
             required
           />
           <button
             type="button"
-            className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-600 cursor-pointer hover:text-gray-800 transition-colors duration-200"
+            className="absolute inset-y-0 right-0 pr-3 flex items-center text-white/70 cursor-pointer hover:text-white transition-colors duration-200"
             onClick={togglePasswordVisibility}
           >
             {showPassword ? (
@@ -113,13 +117,17 @@ const Login = () => {
             )}
           </button>
         </div>
-        {errorMessage && <p className="text-red-500 text-sm mb-2">{errorMessage}</p>}
-        <button className="w-full bg-blue-500 text-white p-2 rounded mb-2 cursor-pointer hover:bg-blue-600 transition-colors duration-200" type="submit">
+        {errorMessage && (
+          <div className="mb-4 p-3 bg-red-500/30 border border-red-400 rounded-lg">
+            <p className="text-white text-sm">{errorMessage}</p>
+          </div>
+        )}
+        <button className="w-full bg-white text-purple-600 font-bold p-3 rounded-lg mb-4 cursor-pointer hover:bg-purple-100 transition-colors duration-200" type="submit">
           {isSignInForm ? "Sign In" : "Sign Up"}
         </button>
-        <p className="text-sm text-center">
+        <p className="text-sm text-center text-white">
           {isSignInForm ? "Don't have an account?" : "Already have an account?"}{" "}
-          <span className="text-blue-500 cursor-pointer hover:text-blue-700 transition-colors duration-200" onClick={toggleSignInForm}>
+          <span className="text-white font-bold cursor-pointer hover:underline transition-all duration-200" onClick={toggleSignInForm}>
             {isSignInForm ? "Sign Up" : "Sign In"}
           </span>
         </p>
