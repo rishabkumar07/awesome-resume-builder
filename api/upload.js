@@ -1,6 +1,6 @@
 import formidable from 'formidable';
 import fs from 'fs';
-import pdfParse from 'pdf-parse';
+import { PDFDocument } from 'pdf-lib'; // Importing pdf-lib
 import OpenAI from 'openai';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -59,8 +59,11 @@ export default async function handler(req, res) {
 
       try {
         const dataBuffer = fs.readFileSync(file[0].filepath);
-        const pdfData = await pdfParse(dataBuffer);
-        const extractedText = pdfData.text;
+
+        // Extract text from PDF using pdf-lib
+        const pdfDoc = await PDFDocument.load(dataBuffer);
+        const pages = pdfDoc.getPages();
+        const extractedText = pages.map(page => page.getTextContent()).join('\n');
 
         const prompt = `
           Extract the following details from this resume text and return as JSON:
