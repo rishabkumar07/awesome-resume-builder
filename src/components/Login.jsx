@@ -97,7 +97,7 @@ const Login = () => {
           />
           <button
             type="button"
-            className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-600 cursor-pointer"
+            className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-600 cursor-pointer hover:text-gray-800 transition-colors duration-200"
             onClick={togglePasswordVisibility}
           >
             {showPassword ? (
@@ -114,12 +114,12 @@ const Login = () => {
           </button>
         </div>
         {errorMessage && <p className="text-red-500 text-sm mb-2">{errorMessage}</p>}
-        <button className="w-full bg-blue-500 text-white p-2 rounded mb-2 cursor-pointer" type="submit">
+        <button className="w-full bg-blue-500 text-white p-2 rounded mb-2 cursor-pointer hover:bg-blue-600 transition-colors duration-200" type="submit">
           {isSignInForm ? "Sign In" : "Sign Up"}
         </button>
         <p className="text-sm text-center">
           {isSignInForm ? "Don't have an account?" : "Already have an account?"}{" "}
-          <span className="text-blue-500 cursor-pointer" onClick={toggleSignInForm}>
+          <span className="text-blue-500 cursor-pointer hover:text-blue-700 transition-colors duration-200" onClick={toggleSignInForm}>
             {isSignInForm ? "Sign Up" : "Sign In"}
           </span>
         </p>

@@ -36,7 +36,7 @@ const Header = () => {
         </div>
         <div className="flex-1 flex justify-end">
           <button 
-            className="bg-red-500 text-white px-4 py-2 rounded cursor-pointer" 
+            className="bg-red-500 text-white px-4 py-2 rounded cursor-pointer hover:bg-red-600 transition-colors duration-200" 
             onClick={handleLogout}
           >
             Logout

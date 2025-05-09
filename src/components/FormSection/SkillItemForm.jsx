@@ -10,12 +10,6 @@ const SkillItemForm = ({ item, index, onListChange, sectionKey, onRemoveItem }) 
         className="flex-grow p-2 border rounded mr-2"
         placeholder="Skill"
       />
-      <button
-        onClick={() => onRemoveItem(sectionKey, index)}
-        className="bg-red-500 text-white px-2 rounded"
-      >
-        ✕
-      </button>
     </div>
   );
 };

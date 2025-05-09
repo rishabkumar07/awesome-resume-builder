@@ -39,18 +39,25 @@ const ResumeTemplate = ({ initialData }) => {
     <div className="mt-6 bg-gray-50 p-8 rounded-lg border shadow-sm max-w-7xl mx-auto">
       <div className="flex justify-between items-center mb-8">
         <h3 className="text-2xl font-semibold">Edit Your Resume</h3>
-        <div className="flex items-center space-x-4">
-          <label className="text-gray-700">Template:</label>
-          <select
-            value={theme}
-            onChange={(e) => setTheme(e.target.value)}
-            className="p-2 border rounded bg-white"
-          >
-            <option value="modern">Modern</option>
-            <option value="classic">Classic</option>
-            <option value="minimal">Minimal</option>
-            <option value="professional">Professional</option>
-          </select>
+        <div className="flex items-center space-x-3">
+          <label className="text-gray-700 font-medium">Template:</label>
+          <div className="relative">
+            <select
+              value={theme}
+              onChange={(e) => setTheme(e.target.value)}
+              className="appearance-none bg-white border border-gray-300 rounded-md pl-3 pr-10 py-2 text-gray-700 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 shadow-sm hover:border-gray-400"
+            >
+              <option value="modern">Modern</option>
+              <option value="classic">Classic</option>
+              <option value="minimal">Minimal</option>
+              <option value="professional">Professional</option>
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+              <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -200,13 +207,13 @@ const ResumeTemplate = ({ initialData }) => {
           <div className="flex flex-wrap gap-3 mt-4 justify-center">
             <button
               onClick={handleSaveToLocal}
-              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors duration-200 cursor-pointer"
             >
               Save to Local Storage
             </button>
             <button
               onClick={handleLoadFromLocal}
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors duration-200 cursor-pointer"
             >
               Load from Local Storage
             </button>
@@ -228,7 +235,7 @@ const ResumeTemplate = ({ initialData }) => {
                     Generating PDF...
                   </button>
                 ) : (
-                  <button className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">
+                  <button className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition-colors duration-200 cursor-pointer">
                     Download as PDF
                   </button>
                 )
@@ -237,7 +244,7 @@ const ResumeTemplate = ({ initialData }) => {
 
             <button
               onClick={handleExportJSON}
-              className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+              className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition-colors duration-200 cursor-pointer"
             >
               Export as JSON
             </button>

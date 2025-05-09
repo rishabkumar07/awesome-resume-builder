@@ -17,7 +17,7 @@ const EditableListSection = ({
             <h5 className="font-medium">{title} #{index + 1}</h5>
             <button
               onClick={() => onRemoveItem(sectionKey, index)}
-              className="bg-red-500 text-white px-2 py-1 rounded text-xs"
+              className="bg-red-500 text-white px-2 py-1 rounded text-xs hover:bg-red-600 transition-colors duration-200 cursor-pointer"
             >
               Remove
             </button>
@@ -27,7 +27,7 @@ const EditableListSection = ({
       ))}
       <button
         onClick={() => onAddItem(sectionKey)}
-        className="bg-green-500 text-white px-3 py-1 rounded text-sm"
+        className="bg-green-500 text-white px-3 py-1 rounded text-sm hover:bg-green-600 transition-colors duration-200 cursor-pointer"
       >
         + Add {title}
       </button>

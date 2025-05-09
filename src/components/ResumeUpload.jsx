@@ -121,7 +121,7 @@ const ResumeUpload = () => {
 
               <button
                 onClick={handleUpload}
-                className="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer disabled:bg-blue-300 disabled:cursor-not-allowed mb-4"
+                className="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors duration-200 cursor-pointer disabled:bg-blue-300 disabled:cursor-not-allowed mb-4"
                 disabled={loading || !file}
               >
                 {loading ? 'Processing...' : 'Upload & Extract'}
@@ -134,14 +134,14 @@ const ResumeUpload = () => {
               
               <button
                 onClick={handleLoadFromLocal}
-                className="w-full bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 cursor-pointer mb-4"
+                className="w-full bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors duration-200 cursor-pointer mb-4"
               >
                 Load from Local Storage
               </button>
               
               <button
                 onClick={() => setResumeData({})}
-                className="w-full bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 cursor-pointer"
+                className="w-full bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition-colors duration-200 cursor-pointer"
               >
                 Start from Scratch
               </button>
@@ -154,7 +154,7 @@ const ResumeUpload = () => {
         <>
           <button
             onClick={handleBackToUpload}
-            className="mb-4 bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600"
+            className="mb-4 bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600 transition-colors duration-200 cursor-pointer"
           >
             ← Back to Upload
           </button>
